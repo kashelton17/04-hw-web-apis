@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="./assets/css/reset.css"> -->
+    <link rel="stylesheet" href="./assets/css/style.css">
+    
+    <title>Web APIs Quiz Game</title>
+</head>
+<body>
+    <header>
+        <h1 class='header'>Ready, Set, Quiz!</h1>
+            <h2>Goodluck!</h2>
+    </header>
+
+    <main>
+        <div class='game'>
+            <button id="start">Press to Start</button>
+            <a class='hidden' id='timer'></a>
+            <h1 class='hidden' id='question'></h1>
+            <ol class='hidden'>
+                <li>
+                    <a class='answers' id='answer1'></a>
+                </li>
+                <li>
+                    <a class='answers' id='answer2'></a>
+                </li>
+                <li>
+                    <a class='answers' id='answer3'></a>
+                </li>
+                <li>
+                    <a class='answers' id='answer4'></a>
+                </li>
+            </ol>
+            <a class='hidden' id='answerType'></a>
+        </div>
+        <div class='showScore'>
+
+        </div>
+    </main>
+    <script src='./assets/js/script.js'></script>
+</body>
+</html>

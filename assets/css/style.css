@@ -1,0 +1,78 @@
+
+header {
+    background: blue;
+    margin: 0px;
+    padding: 2%;
+    font-size: 150%;
+    color: gold
+}
+
+body {
+    background-color: whitesmoke;
+    display: cover;
+    margin: 0px;
+    padding: 0px;
+}
+
+.game {
+    display:flex; 
+    justify-content: center; 
+    align-items: center;
+}
+
+#start {
+    background: cornflowerblue;
+    padding: 2%;
+    margin: 10%;
+    width: 20%;
+    position: absolute;
+    float: center;
+}
+
+#timer {
+    padding: 2px;
+    margin: 10px;
+}
+.questions {
+    display: flex;
+    background: darkgrey;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#question {
+    display:block;
+    align-items: center;
+}
+
+ol{
+    display: block;
+    
+}
+.answers {
+    padding: 2%;
+    width: 100%;
+    display: block;
+    font-weight: bold;
+}
+
+a:hover {
+    background: cornflowerblue;
+    cursor: grab;
+}
+
+
+
+#start:hover {
+    background-color: rgb(75, 132, 238);
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.playAgain {
+    display: block;
+    align-content: center;
+}
