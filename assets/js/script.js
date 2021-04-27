@@ -11,6 +11,8 @@ var answerListEl = document.querySelector('ol')
 var answerType = document.getElementById("answerType")
 var showScoreEl = document.querySelector('.showScore')
 var displayType = document.querySelectorAll('.hidden')
+var scoreButton = document.getElementById('highscore')
+var header = document.querySelector('header')
 
 //create objects with question, three wrong answer parameters and one right answer parameter
 var question1 = {
@@ -128,6 +130,58 @@ localStorage.setItem('highscore', JSON.stringify(highScore))
 var questionNumber = 0
 localStorage.setItem('question-number', questionNumber)
 
+//add the highScore button
+var highScoreList = document.createElement('ol')
+var score1 = document.createElement('li')
+var score2 = document.createElement('li')
+var score3 = document.createElement('li')
+var score4 = document.createElement('li')
+var score5 = document.createElement('li')
+scoreButton.addEventListener('click', function(event) {
+
+    clearInterval(window.myTimer)
+    for (var i = 0; i< displayType.length; i++) {
+        displayType[i].setAttribute('class', 'hidden')
+    }
+
+    var scoreEl = [score1, score2, score3, score4, score5]
+
+    highScoreList.setAttribute('class', 'scoreList')
+
+    var storedHighScores = JSON.parse(localStorage.getItem('highscore'))
+    console.log(storedHighScores)
+    var sortedList = []
+    
+    sortedList = storedHighScores.sort(function(a, b){return b[0]-a[0]})
+        
+    console.log('sorted', sortedList)
+    highScoreList.textContent = 'High Scores' 
+    header.appendChild(highScoreList) 
+    if (sortedList.length === 0) {
+        highScoreList.textContent = ''
+        highScoreList.textContent = 'No high scores'
+        var playConfirm = confirm('No High scores Play Again?')
+        if (playConfirm === true) {
+            startGame()
+            getQuestions()
+        }
+    } else {
+        highScoreList.textContent =''
+        if (sortedList.length < scoreEl.length) {
+            for (var i=0; i < sortedList.length; i++) {
+                scoreEl[i].textContent = String('Name: '+ sortedList[i][1]+ ' ----    Score: '+ sortedList[i][0])
+                highScoreList.appendChild(scoreEl[i])
+            }
+        } 
+        if (sortedList.length > scoreEl.length) {
+            for (var i=0; i < scoreEl.length; i++) {
+                scoreEl[i].textContent = String('Name: '+ sortedList[i][1]+ ' ----    Score: '+ sortedList[i][0])
+                highScoreList.appendChild(scoreEl[i])
+            }
+        }
+    }
+})
+
 // add event listener, when button is pressed, start game aka invoke function
 startButton.addEventListener('click', function(event){
     startButton.remove()
@@ -143,7 +197,9 @@ startButton.addEventListener('click', function(event){
 // create interval timer so that when timer is running the questions are presented and when timer runs out game is over and score is shown
 // remove button from page
 function startGame() {
-    
+    for (var i = 0; i< displayType.length; i++) {
+        displayType[i].setAttribute('class', 'show')
+    }
     count = 10
     timerEl.textContent = count + ' seconds left'
     window.myTimer = setInterval(function() {
@@ -198,7 +254,7 @@ answerListEl.addEventListener("click", function(event) {
     if (choosenAnswer.matches('a'))
     var storedQuestionNum = Number(localStorage.getItem('question-number'))
     var displayQuestion = questionArray[storedQuestionNum]
-    console.log(displayQuestion)
+    console.log('displayQuestion', displayQuestion)
     displayAnswer(choosenAnswer, displayQuestion)
     
 })
@@ -238,13 +294,14 @@ function gameOver() {
     for (var i = 0; i< displayType.length; i++) {
         displayType[i].setAttribute('class', 'hidden')
     } 
+    
 
     //getting stored high scores and adding score 
     var storedHighScores = JSON.parse(localStorage.getItem('highscore'))
     var highScoreLength = storedHighScores.length
     console.log('high score' ,storedHighScores)
     var playerName = prompt('Please Enter your name', 'Name')
-    storedHighScores.push([playerName, userScore.lastGame])
+    storedHighScores.push([userScore.lastGame, playerName])
     localStorage.setItem('highscore', JSON.stringify(storedHighScores))
 
     lastGameScore = userScore.lastGame
@@ -271,6 +328,9 @@ function gameOver() {
     userScore.lastGame = 0
     playAgain(displayScoreLast,displayScoreTotal,displayScoreHighScore)
 }
+// creating a way to end the game if highscore button pressed
+
+
 
 function playAgain(x,y,z) {
     var playAgainButton = document.createElement('button')
@@ -293,52 +353,7 @@ function playAgain(x,y,z) {
 }
 
 // if high score button is clicked display highscores
-var scoreButton = document.getElementById('highscore') 
-scoreButton.addEventListener('click', function(event) {
-    clearInterval(window.myTimer)
-    gameOver()
-    for (var i = 0; i< displayType.length; i++) {
-        displayType[i].setAttribute('class', 'hidden')
-    }
-    var highScoreList = document.createElement('ol')
-    var score1 = document.createElement('li')
-    var score2 = document.createElement('li')
-    var score3 = document.createElement('li')
-    var score4 = document.createElement('li')
-    var score5 = document.createElement('li')
-    var scoreEl = [score1, score2, score3, score4, score5]
+ 
 
-    highScoreList.setAttribute('class', 'scoreList')
-
-    var storedHighScores = JSON.parse(localStorage.getItem('highscore'))
-    console.log(storedHighScores)
-    var sortedList = []
-    for (var j = 0; j < storedHighScores.length; j++)
-        for (var i= 0; i < storedHighScores.length -1; i++) {
-            if (storedHighScores[j + 1][1] > storedHighScores[i][1]) {
-                sortedList.push(storedHighScores[i])
-            } else {
-                sortedList.unshift(storedHighScores[i])
-            }
-        
-        }
-    let uniqueScores = [];
-    sortedList.forEach((x) => {
-        if (!uniqueScores.includes(x)) {
-            uniqueScores.push(x);
-        }
-    });
-    console.log(uniqueScores)
-    highScoreList.textContent = 'High Scores' 
-    gameEl.appendChild(highScoreList)   
-    for (var i=0; i < scoreEl.length; i++) {
-        scoreEl[i].textContent = String('Name: ', uniqueScores[i][0], 'Score: ', uniqueScores[i][1])
-        highScoreList.appendChild(scoreEl[i])
-    }
-    
-
-    
-
-})
 
 

@@ -4,9 +4,12 @@ header {
     margin: 0px;
     padding: 2%;
     font-size: 150%;
-    color: gold
+    color: gold;
+    display: block;
 }
-
+.header {
+    display: block;
+}
 body {
     background-color: whitesmoke;
     display: cover;
@@ -78,9 +81,6 @@ a:hover {
 }
 
 .scoreList {
-    position: absolute;
-    top: 50%;
-    width: 100%;
-    text-align: center;
-    font-size: 18px;
+    align-content: right;
+    align-items: right;
 }
