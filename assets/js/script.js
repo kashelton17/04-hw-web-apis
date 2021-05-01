@@ -14,6 +14,7 @@ var displayType = document.querySelectorAll('.hidden')
 var scoreButton = document.getElementById('highscore')
 var header = document.querySelector('header')
 
+$(scoreButton).hide()
 //create objects with question, three wrong answer parameters and one right answer parameter
 var question1 = {
     question: 'What is the CSS parameter for text color?',
@@ -185,6 +186,7 @@ scoreButton.addEventListener('click', function(event) {
 // add event listener, when button is pressed, start game aka invoke function
 startButton.addEventListener('click', function(event){
     startButton.remove()
+    
     for (var i = 0; i< displayType.length; i++) {
         displayType[i].setAttribute('class', 'show')
     }
@@ -198,8 +200,9 @@ startButton.addEventListener('click', function(event){
 // remove button from page
 function startGame() {
     for (var i = 0; i< displayType.length; i++) {
-        displayType[i].setAttribute('class', 'show')
+        $(displayType[i]).show()
     }
+    $(scoreButton).hide()
     count = 10
     timerEl.textContent = count + ' seconds left'
     window.myTimer = setInterval(function() {
@@ -292,10 +295,10 @@ function displayAnswer(choosenAnswer, displayQuestion) {
 // the game over function shows the scores of the game
 function gameOver() {
     for (var i = 0; i< displayType.length; i++) {
-        displayType[i].setAttribute('class', 'hidden')
+        $(displayType[i]).hide()
     } 
     
-
+    $(scoreButton).show()
     //getting stored high scores and adding score 
     var storedHighScores = JSON.parse(localStorage.getItem('highscore'))
     var highScoreLength = storedHighScores.length
