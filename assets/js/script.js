@@ -196,6 +196,7 @@ startButton.addEventListener('click', function(event){
     getQuestions()
 })
 
+
 // create interval timer so that when timer is running the questions are presented and when timer runs out game is over and score is shown
 // remove button from page
 function startGame() {
@@ -203,14 +204,17 @@ function startGame() {
         $(displayType[i]).show()
     }
     $(scoreButton).hide()
-    count = 10
+    count = 60
+    localStorage.setItem('game-count', count)
     timerEl.textContent = count + ' seconds left'
     window.myTimer = setInterval(function() {
         timerEl.textContet = count + ' seconds left'
 
         if (count > 0 ) {
+            count=localStorage.getItem('game-count')
             count--;
             timerEl.textContent = count + ' seconds left'
+            localStorage.setItem('game-count', count)
             
         } else {
             clearInterval(window.myTimer)
@@ -233,7 +237,7 @@ function getQuestions() {
         console.log('stored + 1',storedQuestionNum+1)
         localStorage.setItem('question-number', String(storedQuestionNum+1))
     }
-    
+    console.log('storedQ ', storedQuestionNum)
     var displayQuestion = questionArray[storedQuestionNum]
 
     //displaying questions and answers
@@ -256,9 +260,10 @@ answerListEl.addEventListener("click", function(event) {
     //making sure the clicked target matches what the answer element is
     if (choosenAnswer.matches('a'))
     var storedQuestionNum = Number(localStorage.getItem('question-number'))
-    var displayQuestion = questionArray[storedQuestionNum]
+    var displayQuestion = questionArray[storedQuestionNum-1]
     console.log('displayQuestion', displayQuestion)
     displayAnswer(choosenAnswer, displayQuestion)
+    console.log('choosen: ',choosenAnswer.textContent,' right: ', displayQuestion.rightAnswer.textContent)
     
 })
 
@@ -272,7 +277,12 @@ function displayAnswer(choosenAnswer, displayQuestion) {
         userScore.lastGame++
         console.log('Score' ,userScore.lastGame)
     } else {
+        choosenAnswer = ''
         answerGrade = 'Incorrect'
+        var storedCount = localStorage.getItem('game-count')
+        storedCount -= 5
+        localStorage.setItem('game-count', storedCount)
+
     }
     
     answerType.textContent = answerGrade
