@@ -161,11 +161,6 @@ scoreButton.addEventListener('click', function(event) {
     if (sortedList.length === 0) {
         highScoreList.textContent = ''
         highScoreList.textContent = 'No high scores'
-        var playConfirm = confirm('No High scores Play Again?')
-        if (playConfirm === true) {
-            startGame()
-            getQuestions()
-        }
     } else {
         highScoreList.textContent =''
         if (sortedList.length < scoreEl.length) {
