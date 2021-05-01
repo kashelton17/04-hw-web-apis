@@ -314,11 +314,13 @@ function gameOver() {
     $(scoreButton).show()
     //getting stored high scores and adding score 
     var storedHighScores = JSON.parse(localStorage.getItem('highscore'))
-    var highScoreLength = storedHighScores.length
     console.log('high score' ,storedHighScores)
     var playerName = prompt('Please Enter your name', 'Name')
-    storedHighScores.push([userScore.lastGame, playerName])
-    localStorage.setItem('highscore', JSON.stringify(storedHighScores))
+    if (playerName === !null) {
+        storedHighScores.push([userScore.lastGame, playerName])
+        localStorage.setItem('highscore', JSON.stringify(storedHighScores))
+    }
+    
 
     lastGameScore = userScore.lastGame
     localStorage.setItem('last-game', lastGameScore)
