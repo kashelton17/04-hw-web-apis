@@ -260,6 +260,9 @@ answerListEl.addEventListener("click", function(event) {
     //making sure the clicked target matches what the answer element is
     if (choosenAnswer.matches('a'))
     var storedQuestionNum = Number(localStorage.getItem('question-number'))
+    if (storedQuestionNum === 0){
+        storedQuestionNum = 12
+    }
     var displayQuestion = questionArray[storedQuestionNum-1]
     console.log('displayQuestion', displayQuestion)
     displayAnswer(choosenAnswer, displayQuestion)
